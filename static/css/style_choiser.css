@@ -1,0 +1,39 @@
+.black_box {
+    background: #1D1D1D;
+
+
+
+    padding: 10px; /* Поля */
+    border: 2px solid #000; /* Параметры рамки */
+
+    -webkit-box-shadow: 5px 5px 15px 5px #000000;
+    box-shadow: 5px 5px 15px 5px #000000;
+
+    border-radius: 16px;
+
+}
+
+.text-about {
+    font-family: Play;
+    font-size: 32px;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: 700;
+    line-height: 26.4px;
+    color: #ffffff;
+
+    text-align: center;
+}
+
+.data {
+    font-family: Play;
+font-size: 22px;
+letter-spacing: 2px;
+word-spacing: 2px;
+color: #000000;
+font-weight: normal;
+text-decoration: none;
+font-style: normal;
+font-variant: small-caps;
+text-transform: none;
+}
