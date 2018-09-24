@@ -255,16 +255,20 @@ def home_render():
 
 @app.route('/eat')
 def eat_render():
-    kkal_norma = int(calculator())
-    belki = int(belki_calc())
-    giry = int(giry_calc())
-    ugl = int(ugl_cal())
+    user = User.query.get(USER_ID)
+    if user.massuser is None:
+        return render_template('pages/start/gender.html', data=poll_data)
+    else:
+        kkal_norma = int(calculator())
+        belki = int(belki_calc())
+        giry = int(giry_calc())
+        ugl = int(ugl_cal())
 
-    return render_template('pages/lk/eat.html',
-                           kkal_norma=kkal_norma,
-                           belki=belki,
-                           giry=giry,
-                           ugl=ugl)
+        return render_template('pages/lk/eat.html',
+                               kkal_norma=kkal_norma,
+                               belki=belki,
+                               giry=giry,
+                               ugl=ugl)
 
 @app.route('/eatrender', methods=['POST'])
 def eat_add_render():

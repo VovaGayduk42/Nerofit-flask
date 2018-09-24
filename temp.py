@@ -1,6 +1,6 @@
 from app import models, db
 
-u = models.User(username='python',password='python')
+u = models.User(username='kek',password='kek')
 db.session.add(u)
 db.session.commit()
 
