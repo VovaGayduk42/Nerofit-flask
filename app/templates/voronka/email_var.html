@@ -1,0 +1,24 @@
+{% extends 'forms/blackbox.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/blackbox_email.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Play"/>
+
+    <div class="bb">
+        <div class="bb-screen">
+            <div class="title">
+                <p>Отлично! На этом всё! Мы подготовили для вас бесплатную инструкцию "10 шагов к стройной фигуре". Введите почту, куда вам отправить инструкцию.</p>
+            </div>
+            <div class="bb-form">
+                <form action="/login" method="POST">
+                    <div class="control-group">
+
+                        <p><input type="text" name="email_var" maxlength="30" required autocomplete="on"></p>
+                    </div>
+                    <input type="submit" class="btn" name="button_next" value="Далее">
+                </form>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

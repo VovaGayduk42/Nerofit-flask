@@ -1,0 +1,25 @@
+{% extends 'forms/blackbox.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/blackbox_max.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Play"/>
+    <div class="bb">
+        <div class="bb-screen">
+            <div class="title">
+                <p>{{ data.question }}</p>
+            </div>
+            <div class="bb-form">
+                <form action="/test/email_var">
+                    <div class="control-group">
+                        {% for e in data.fields %}
+
+                            <input class="checkbox-field" type="radio" required name="training_var" value="{{ e }}"> {{ e }}<br>
+
+                        {% endfor %}
+                    </div>
+                    <input class="btn" name="button_next" type="submit" value="Далее"/>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

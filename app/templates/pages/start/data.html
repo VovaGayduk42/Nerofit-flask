@@ -1,0 +1,23 @@
+{% extends 'forms/blackbox.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/blackbox.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Play"/>
+
+    <div class="bb">
+        <div class="bb-screen">
+            <div class="title">
+                <p>Ваш возраст</p>
+            </div>
+            <div class="bb-form">
+                <form action="/datainfo" method="POST">
+                    <div class="control-group">
+                        <input type="text" name="date" maxlength="2" autocomplete="off" required>
+                    </div>
+                    <input type="submit" class="btn" name="button_next" value="Далее">
+                </form>
+            </div>
+        </div>
+    </div>
+    </form>
+{% endblock %}

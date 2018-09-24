@@ -1,0 +1,37 @@
+{% extends 'forms/blackbox.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/blackbox_max.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/column_style.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Play"/>
+
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Play"/>
+
+    <div class="bb">
+        <div class="bb-screen">
+            <div class="title">
+                <p>Введите замеры</p>
+            </div>
+            <div class="bb-form">
+                <form action="/useradding" method="POST">
+                    <div class="control-group">
+                        <div class="dimension">
+                            <p>Вес <input type="text" name="mass" maxlength="3" size="10" min="20" max="300" autocomplete="off" required> кг</p>
+                            <p> Грудь <input type="text" name="chest" maxlength="3" size="10" autocomplete="off" required> см.</p>
+                            <p> Левая рука <input type="text" name="left_hand" maxlength="3" size="10" autocomplete="off" required> см.</p>
+                            <p> Левое бедро <input type="text" name="left_bedro" maxlength="3" size="10" autocomplete="off" required> см.</p>
+                            <p> Левая голень <input type="text" name="left_golen" maxlength="3" size="10" autocomplete="off" required> см.</p>
+                            <p> Талия <input type="text" name="waist" maxlength="3" size="10" autocomplete="off" required> см.</p>
+                            <p> Ягодицы <input type="text" name="buttock" maxlength="3" size="10" autocomplete="off" required> см.</p>
+                            <p>Правая рука <input type="text" name="right_hand" maxlength="3" size="10" autocomplete="off" required> см.</p>
+                            <p> Правое бедро <input type="text" name="right_bedro" maxlength="3" size="10" autocomplete="off" required> см.</p>
+                            <p> Правая голень <input type="text" name="right_golen" maxlength="3" size="10" autocomplete="off" required> см.</p>
+                        </div>
+                    </div>
+                    <input type="submit" class="btn" name="button_next" value="Добавить">
+                </form>
+            </div>
+        </div>
+    </div>
+    </form>
+{% endblock %}

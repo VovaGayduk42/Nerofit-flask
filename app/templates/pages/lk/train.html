@@ -1,0 +1,47 @@
+{% extends 'forms/menu.html' %}
+{% block title %}{% endblock %}
+{% block content %}
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/btn_style.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/train_style.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Play"/>
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/column_style.css") }}"/> -->
+    {% if not session['logged_in'] %}
+        <p><a href="/logout">Log in</a></p>
+    {% else %}
+        <div class="bb">
+            <div class="bb-screen">
+                <div class="title">
+                    <p>Тренировка</p>
+                </div>
+                <div calss="bb-form">
+                    <ul id="list_items">
+
+                        <li>1. <a href="https://vk.com">Тренировка</a> ХХ повт. <img class="src"
+                                                                                    src="/static/img/youtube1600.png"
+                                                                                    alt="home_img" height="60"></li>
+                        <li>2. <a href="https://vk.com">Тренировка</a> ХХ повт. <img class="src"
+                                                                                    src="/static/img/youtube1600.png"
+                                                                                    alt="home_img" height="60"></li>
+                        <li>3. <a href="https://vk.com">Тренировка</a> ХХ повт. <img class="src"
+                                                                                    src="/static/img/youtube1600.png"
+                                                                                    alt="home_img" height="60"></li>
+                        <li>4. <a href="https://vk.com">Тренировка</a> ХХ повт. <img class="src"
+                                                                                    src="/static/img/youtube1600.png"
+                                                                                    alt="home_img" height="60"></li>
+                        <li>5. <a href="https://vk.com">Тренировка</a> ХХ повт. <img class="src"
+                                                                                    src="/static/img/youtube1600.png"
+                                                                                    alt="home_img" height="60"></li>
+                        <li>6. <a href="https://vk.com">Тренировка</a> ХХ повт. <img class="src"
+                                                                                    src="/static/img/youtube1600.png"
+                                                                                    alt="home_img" height="60"></li>
+                    </ul>
+                    <form action="/home" method="POST">
+                    <input type="submit" class="btn" name="button_next" value="Выполнить">
+                </form>
+                </div>
+            </div>
+        </div>
+
+    {% endif %}
+
+{% endblock %}
