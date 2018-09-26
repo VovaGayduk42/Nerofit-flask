@@ -1,14 +1,11 @@
-from flask import Flask, flash, render_template, request, session, app
-import os
-from flask_sqlalchemy import SQLAlchemy
-from Other.model_udb import *
-from Other.sqlAlchemy_insert import user_add
+from flask import render_template
 
-from tables import Results
+from app import app, db
+
 
 @app.route('/')
 def login_page():
-    return render_template('')
+    return render_template('app/templates/template.html')
 
 
 if __name__ == "__main__":

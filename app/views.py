@@ -1,8 +1,9 @@
 from flask import session, render_template, request, flash
 from Other.sqlAlchemy_insert import user_add
 from app import app, db
-from app.models import User, user_info
+from app.models import User, user_info, Training
 from tables import Results
+from datetime import datetime, timedelta
 
 poll_data = {
     'question': 'Ваш пол?',
@@ -34,6 +35,7 @@ activity_data = {
 
 
 
+
 @app.route('/')
 def home():
     if not session.get('logged_in'):
@@ -45,18 +47,14 @@ def home():
         auth = user.auth
         print('Authentification=', auth)
         if auth:
+            print('if auth CONTROL')
             return home_render()
         else:
-            user.auth = True
-            db.session.commit()
             return welcome()
 @app.route('/testpage')
 def test_page_render():
     return render_template('voronka/walletone.html')
 
-@app.route('/login')
-def login_page():
-    return home()
 
 
 @app.route('/reg', methods=['POST'])
@@ -80,9 +78,12 @@ def do_admin_login():
         USER_ID = result.id
         session ['logged_in'] = True
     else:
-        flash('wrong password!')
+         flash('wrong password!')
     return home()
 
+@app.route('/login', methods=['POST'])
+def login_page():
+    return home()
 
 @app.route('/welcome')
 def welcome():
@@ -196,6 +197,7 @@ def userinfo():
                   right_golen=right_golen,
                   user_id_helper=USER_ID)
     ]
+    user.auth = True
     db.session.commit()
     return instruction_render()
 
@@ -279,6 +281,17 @@ def eat_add():
 
 @app.route('/train')
 def train_render():
+    a = datetime.now()
+    b = timedelta(days=1)
+    c = datetime(2018,10,10,0,0,0)
+    str(a)
+    tomorrow_data = a + b
+    now_data = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
+    current_data = datetime.strftime(tomorrow_data, "%Y-%m-%d %H:%M:%S")
+
+    time_now = datetime.strftime(datetime.now(), "%H:%M:%S")
+    time_zero = datetime.strftime(c, "%H:%M:%S")
+    # if time_now == time_zero:
     return render_template('pages/lk/train.html')
 
 
@@ -323,10 +336,22 @@ def progress_btn():
 #     return render_template('errors/404.html'), 404
 
 
+@app.route('/testpopup')
+def popup_render():
+    return render_template('another/test.html')
+
 @app.route("/logout")
 def logout():
     session['logged_in'] = False
     return home()
+
+@app.route('/article')
+def article_render():
+    return render_template('another/article.html')
+
+@app.route('/video')
+def video_render():
+    return render_template('another/template.html')
 
 
 def calculator():
@@ -400,13 +425,22 @@ def l_calc():
 
 @app.route('/test')
 def start_test_var():
-    return gender_var_render()
+    return start_var_render()
+
+@app.route('/test/start_var')
+def start_var():
+    return start_var_render()
+
+@app.route('/test', methods=['POST'])
+def start_var_render():
+    return render_template('voronka/start_voronka.html')
+
 
 @app.route('/test/gender_var')
 def gender_var():
     return gender_var_render()
 
-@app.route('/test', methods=['POST'])
+@app.route('/test/gender_var', methods=['POST'])
 def gender_var_render():
     return render_template('voronka/gender_var.html', data=poll_data)
 

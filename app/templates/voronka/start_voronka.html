@@ -7,18 +7,20 @@
     <div class="bb">
         <div class="bb-screen">
             <div class="title">
-                <p>Ваш вес</p>
+                <p>Хотите похудеть?</p>
             </div>
             <div class="bb-form">
-                <form action="/test/start_voronka" method="POST">
+                <p>Пройдите бесплатный тест и узнайте, <br>как нужно питаться именно вам </p>
+                <form action="/test/gender_var" method="POST">
                     <div class="control-group">
-
-                        <p><input type="text" name="height" maxlength="3" min="30" max="300" required autocomplete="off"> см.</p>
                     </div>
-                    <input type="submit" class="btn" name="button_next" value="Далее">
+                    <input type="submit" class="btn" name="button_next" value="Начать тест">
+
                 </form>
             </div>
         </div>
     </div>
+
+ {% include 'forms/popup_exit.html' %}
 
 {% endblock %}

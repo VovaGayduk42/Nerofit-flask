@@ -2,7 +2,17 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     {% block title %}{% endblock %}
+ <!-- Add the OuiBounce CSS & Font -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/ouibounce/ouibounce.min.css") }}"/>
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Load jQuery -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+    <!-- Add OuiBounce JS -->
+    <script src="/static/js/ouibounce.js"></script>
 </head>
 <body>
 {% block content %}{% endblock %}
