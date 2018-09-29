@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, shrink-to-fit=no" />	
+	<title>Document</title>
+	<link href="https://fonts.googleapis.com/css?family=Play:400,700&amp;subset=cyrillic" rel="stylesheet" />	
+	 <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/quiz/fonts.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/quiz/style.css") }}"/>
+</head>
+<body>
+	<div class="page">
+		<h1 class="page__title">А как дела с тренировками?</h1>
+		<div class="progress">
+			<div class="progress__text">Готово: <span class="progress__value">88%</span></div>
+			<div class="progress__bar">
+				<div class="progress__bar-inner" style="width:88%"></div>
+			</div>
+		</div>
+		<form method="post" action="submit" class="review-form">
+			<label class="text-label review-form__label">
+				<input type="radio" name="training" value="no" checked />
+				<span class="text-label__text">Нет опыта тренировок</span>
+			</label>
+			<label class="text-label review-form__label">
+				<input type="radio" name="training" value="far" />
+				<span class="text-label__text">Был опыт тренировок, но давно. Более года не тренируюсь</span>
+			</label>
+			<label class="text-label review-form__label">
+				<input type="radio" name="training" value="trying" />
+				<span class="text-label__text">Периодически начинаю тренироваться, но быстро бросаю</span>
+			</label>
+			<label class="text-label review-form__label">
+				<input type="radio" name="training" value="home" />
+				<span class="text-label__text">Регулярно тренируюсь дома</span>
+			</label>
+			<label class="text-label review-form__label">
+				<input type="radio" name="training" value="regular" />
+				<span class="text-label__text">Регулярно тренируюсь в зале</span>
+			</label>
+			<div class="review-form__footer">
+				<button class="review-form__btn">Далее</button>
+			</div>
+		</form>
+	</div>
+<script src="//code.jquery.com/jquery-latest.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

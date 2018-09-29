@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, shrink-to-fit=no"/>
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/css?family=Play:400,700&amp;subset=cyrillic" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/quiz/fonts.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/quiz/style.css") }}"/>
+</head>
+<body class="">
+<div class="page">
+    <h1 class="page__title">Отлично. Последний шаг!</h1>
+    <div class="submit">
+        <img src="/static/img/quiz/book.png" alt="" class="submit__img"/>
+        <div class="submit__text">
+            <div>Мы подготовили для вас инструкцию как нужно действовать, чтобы похудеть. <strong>Введите e-mail, куда
+                вам отправить инструкцию.</strong></div>
+            <form action="https://app.getresponse.com/add_subscriber.html" accept-charset="utf-8" method="post">
+                <form method="post" action="final" class="submit__form">
+
+
+                    <input type="email" name="email" placeholder="Email" class="big-input" required/>
+                    <button class="btn_block">Получить инструкцию</button>
+                    <input type="hidden" name="campaign_token" value="n0CCp"/>
+                </form>
+            </form>
+            <div class="submit__footer">Количество скачиваний: 15782</div>
+        </div>
+    </div>
+</div>
+<script src="//code.jquery.com/jquery-latest.min.js"></script>
+<script src="js/script.js"></script>
+</body>
+</html>

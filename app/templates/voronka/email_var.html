@@ -1,25 +1,36 @@
 {% extends 'forms/blackbox.html' %}
 {% block title %}{% endblock %}
 {% block content %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/blackbox_email.css") }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ url_for("static", filename="css/bluebox_email.css") }}"/>
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Play"/>
-
+   <img class="src"
+                 src="/static/img/book.png"
+                 alt="book" height="500">
     <div class="bb">
         <div class="bb-screen">
+
+
             <div class="title">
-                <p>Отлично! На этом всё! Мы подготовили для вас бесплатную инструкцию "10 шагов к стройной фигуре". Введите почту, куда вам отправить инструкцию.</p>
+                <p>Это последний шаг!</p><br>
+            </div>
+
+            <div class="descr">
+                <p>Мы подготовили для вас<br>инструкцию как нужно<br>действовать, чтобы похудеть.</p>
+            </div>
+            <div class="btext">
+                <p>Введите E-mail, куда вам<br>отправить файл</p>
             </div>
             <div class="bb-form">
-                <form action="/login" method="POST">
+                <form action="/test/email_var" method="POST">
                     <div class="control-group">
 
-                        <p><input type="text" name="email_var" maxlength="30" required autocomplete="on"></p>
+                        <p><input type="text" name="email_var" maxlength="30" required autocomplete="on" autofocus placeholder="E-mail"></p>
                     </div>
-                    <input type="submit" class="btn" name="button_next" value="Далее">
+                    <input type="submit" class="btn" name="button_next" value="Получить книгу">
                 </form>
             </div>
         </div>
     </div>
-     {% include 'forms/popup_exit.html' %}
+    {#   {% include 'forms/popup_exit.html' %}#}
 
 {% endblock %}
