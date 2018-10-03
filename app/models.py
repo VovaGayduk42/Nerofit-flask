@@ -21,6 +21,7 @@ class User(UserMixin,db.Model):
     belki = db.Column(db.Integer, default=0)
     jiry = db.Column(db.Integer, default=0)
     ugli = db.Column(db.Integer, default=0)
+    day_train = db.Column(db.Integer, default=1)
 
     user_info = db.relationship('user_info', backref = 'user')
 

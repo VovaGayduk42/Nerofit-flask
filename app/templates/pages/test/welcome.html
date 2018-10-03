@@ -12,11 +12,20 @@
 {% if not session['logged_in'] %}
 <p><a href="/">Log in</a></p>
 {% else %}
-	<div class="index-block">
-		<h1 class="index-block__title">Привет! Спасибо, что ты с нами! ...</h1>
-		<div class="index-block__text">Пройдите тест, он поможет нам составить программу адаптированную под вас</div>
+	<div class="welcome-block">
+		<h1 class="welcome-block__title">Добро пожаловать в систему!</h1>
+		<div class="welcome-block__text">Для того, чтобы начать свою трансформацию вам нужно пройти тест и заполнить информацию о себе для того, чтобы мы могли рассчитали оптимальное для вас питание.
+Чтобы начать тест нажмите кнопку, которая находится ниже.
+
+Также вам обязательно нужно будет ввести свои замеры и загрузить фото. Для того, чтобы вам было проще отслеживать свой прогресс.
+
+Поэтому обязательно вводите свои корректные данные, потому что от этого на прямую зависит ваш результат.
+
+А прямо сейчас нажимайте кнопку "Начать тест" и приступайте к его выполнению.</div>
 		<div class="index-block__footer">
-			<a href="/user/sex" class="btn btn_big index-block__btn">Начать тест</a>
+            <form action="/poll">
+			<input type="submit" class="btn btn_big index-block__btn" value="Начать тест"/>
+            </form>
 		</div>
 	</div>
 <script src="//code.jquery.com/jquery-latest.min.js"></script>

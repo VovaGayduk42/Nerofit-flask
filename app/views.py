@@ -49,8 +49,6 @@ def index():
         print('down town')
         login_user(result)
         session['logged_in'] = True
-
-        USER_ID = User.get_id(current_user)
     else:
         flash('wrong password!')
     return home()
@@ -61,8 +59,19 @@ def index():
 def hom():
     return 'The cerrent user is' + current_user.username
 
-
 @app.route('/')
+def empty_page():
+    if not session.get('logged_in'):
+        return "<h1>Please LOGIN! <a href='/login'>Login</a><h1>"
+    else:
+        user = User.query.get(current_user.id)
+        auth = user.auth
+        if auth:
+            return home_render()
+        else:
+            return welcome()
+
+@app.route('/login')
 def home():
     if not session.get('logged_in'):
         return render_template('login.html')
@@ -105,89 +114,94 @@ def do_register():
 #          flash('wrong password!')
 #     return home()
 @app.route('/logout')
-@login_required
+# @login_required
 def logout():
-    logout_user()
-    session['logged_in'] = False
-    return home()
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        logout_user()
+        session['logged_in'] = False
+        return home()
 
 
 @app.route('/welcome')
 def welcome():
-    return render_template('pages/start/welcome.html')
-
-
-@app.route('/test/1', methods=['POST'])
-def root():
-    return render_template('pages/test/sex.html',data = poll_data)
+    return render_template('pages/test/welcome.html')
 
 
 @app.route('/poll')
+def root():
+    return render_template('pages/test/sex.html', data = poll_data)
+
+
+@app.route('/poll', methods=['POST'])
 def poll():
-    USER_ID = User.get_id(current_user)
-    vote = request.args.get('sex')
+    print('Я тут был!')
+    vote = request.form["sex"]
+    print(vote)
     if (vote == "Мужчина"):
         value = 1
     elif (vote == "Женщина"):
         value = 2
     else:
         value = 3
-    user = User.query.get(USER_ID)
+    user = User.query.get(current_user.id)
     user.gender = value
     print(value)
     db.session.commit()
-    return data_render()
+    return date_render()
 
 
-@app.route('/activity', methods=['POST'])
-def activity_root():
-    return render_template('pages/start/activity.html', data=activity_data)
-
-
-@app.route('/activity')
-def activity_poll():
-    res = request.args.get('activity')
-    if (res == "Низкая"):
-        act = 1
-    elif (res == "Средняя"):
-        act = 2
-    else:
-        act = 3
-    USER_ID = User.get_id(current_user)
-    user = User.query.get(USER_ID)
-    user.activity = act
-    db.session.commit()
-    return userinfo_render()
-
-
-@app.route('/datainfo')
-def data_render():
-    return render_template('pages/start/data.html')
+@app.route('/poll')
+def date_render():
+    return render_template('pages/test/age.html')
 
 
 @app.route('/datainfo', methods=['POST'])
 def date():
     text = request.form['date']
-    USER_ID = User.get_id(current_user)
+    USER_ID = current_user.id
     user = User.query.get(USER_ID)
     user.data = text
+    print(text)
     db.session.commit()
     return height_render()
 
 
 @app.route('/heightinfo')
 def height_render():
-    return render_template('pages/start/height.html')
+    return render_template('pages/test/height.html')
 
 
 @app.route('/heightinfo', methods=['POST'])
 def height():
-    USER_ID = User.get_id(current_user)
     height = request.form['height']
-    user = User.query.get(USER_ID)
+    user = User.query.get(current_user.id)
     user.height = height
+    print(height)
     db.session.commit()
     return activity_root()
+
+
+@app.route('/activity')
+def activity_root():
+    return render_template('pages/test/activity.html', data=activity_data)
+
+
+@app.route('/activity', methods=['POST'])
+def activity_poll():
+    res = request.form['activity']
+    print('activity is ', res)
+    if (res == "Низкая"):
+        act = 1
+    elif (res == "Средняя"):
+        act = 2
+    else:
+        act = 3
+    user = User.query.get(current_user.id)
+    user.activity = act
+    db.session.commit()
+    return userinfo_render()
 
 
 @app.route('/userinfo')
@@ -197,7 +211,6 @@ def userinfo_render():
 
 @app.route('/userinfo', methods=['POST'])
 def userinfo():
-    USER_ID = User.get_id(current_user)
     mass = request.form['mass']
     chest = request.form['chest']
     left_hand = request.form['left_hand']
@@ -211,7 +224,7 @@ def userinfo():
 
     # print('parametrs:', mass,chest,left_hand,left_golen,left_bedro)
     # print('userinfo INFO=', mass)
-    user = User.query.get(USER_ID)
+    user = User.query.get(current_user.id)
     user.massuser = mass
     user.user_info = [
         user_info(mass=mass,
@@ -224,7 +237,7 @@ def userinfo():
                   right_hand=right_hand,
                   right_bedro=right_bedro,
                   right_golen=right_golen,
-                  user_id_helper=USER_ID)
+                  user_id_helper=current_user.id)
     ]
     user.auth = True
     db.session.commit()
@@ -238,7 +251,7 @@ def userinfo_add_render():
 
 @app.route('/useradding', methods=['POST'])
 def user_add_info():
-    USER_ID = User.get_id(current_user)
+
     mass = request.form['mass']
     chest = request.form['chest']
     left_hand = request.form['left_hand']
@@ -252,7 +265,7 @@ def user_add_info():
 
     # print('parametrs:', mass,chest,left_hand,left_golen,left_bedro)
     # print('userinfo INFO=', mass)
-    user = User.query.get(USER_ID)
+    user = User.query.get(current_user.id)
     user.massuser = mass
     user.user_info = [
         user_info(mass=mass,
@@ -265,7 +278,7 @@ def user_add_info():
                   right_hand=right_hand,
                   right_bedro=right_bedro,
                   right_golen=right_golen,
-                  user_id_helper=USER_ID)
+                  user_id_helper=current_user.id)
     ]
     db.session.commit()
     return progress_render()
@@ -273,13 +286,12 @@ def user_add_info():
 
 @app.route('/instruction')
 def instruction_render():
-    return render_template('pages/start/instruction.html')
+    return render_template('pages/test/instruction.html')
 
 
 @app.route('/home')
 def home_render():
-    USER_ID = User.get_id(current_user)
-    user = User.query.get(USER_ID)
+    user = User.query.get(current_user.id)
     username = user.username
     print(username)
     return render_template('pages/lk/home.html', username=username)
@@ -287,10 +299,9 @@ def home_render():
 
 @app.route('/eat', methods=['GET', 'POST'])
 def eat_render():
-    USER_ID = User.get_id(current_user)
-    user = User.query.get(USER_ID)
+    user = User.query.get(current_user.id)
     if user.massuser is None:
-        return render_template('pages/start/gender.html', data=poll_data)
+        return render_template('pages/test/sex.html', data=poll_data)
     else:
         kkal_norma = int(calculator())
         belki = int(belki_calc())
@@ -317,8 +328,8 @@ def eat_render():
         jiry = request.form['jiry']
         belok = request.form['belok']
         ugli = request.form['ugli']
-        USER_ID = User.get_id(current_user)
-        user = User.query.get(USER_ID)
+
+        user = User.query.get(current_user.id)
 
         user.belki += int(belok)
         user.jiry += int(jiry)
@@ -354,8 +365,15 @@ def eat_add():
 
 @app.route('/train')
 def train_render():
-    USER_ID = User.get_id(current_user)
-    user = User.query.get(USER_ID)
+
+    user = User.query.get(current_user.id)
+
+
+    if user.day_train == None:
+        user.day_train = 1
+        db.session.commit()
+
+
     exer_1 = ''
     exer_2 = ''
     exer_3 = ''
@@ -372,6 +390,7 @@ def train_render():
 
     day_key = user.train
 
+
     day_of_train = {
         1: '1 DAY',
         2: '2 DAY',
@@ -380,55 +399,61 @@ def train_render():
         5: '5 DAY',
         6: '5 DAY'
     }
-
-    if day_key in day_of_train:
-        day = day_of_train[day_key]
-
-    if day_key == 1:
-        exer_1 = 'Разминка'
-        exer_2 = 'Приседания '
-        exer_3 = 'Скручивания '
-        exer_4 = 'Лодочка '
-        url_1 = 'c2u6aa64j80'
-        url_2 = 'OhhXifdyhxs'
-        url_3 = 'Sz0naPQqnPY'
-        url_4 = 'XpnZE9JzRto'
-    if day_key == 2:
-        exer_1 = 'Выходной'
-    if day_key == 3:
-        exer_1 = 'Разминка'
-        exer_2 = 'Выпады поочерёдно на каждую ногу'
-        exer_3 = 'Ситап'
-        exer_4 = 'Подъём корпуса лёжа на животе '
-        url_1 = 'c2u6aa64j80'
-        url_2 = 'pclYaTqMZI4'
-        url_3 = 'W-ZBcZnuQqM'
-        url_4 = '5eLxwsNCn1Y'
-    if day_key == 4:
-        exer_1 = 'Выходной'
-    if day_key == 5:
-        exer_1 = 'Приседания'
-        exer_2 = 'Ягодичный мостик'
-        exer_3 = 'Отжимания с колен'
-        exer_4 = 'Скалолаз '
-        exer_5 = 'Планка'
-        url_1 = 'c2u6aa64j80'
-        url_2 = 'UsJMO-wLf0Y'
-        url_3 = 'LecVKn8Q-MM'
-        url_4 = 'Sz0naPQqnPY'
-        url_5 = 'XpnZE9JzRto'
-    if day_key == 5:
-        exer_1 = 'Выходной'
+    day = day_of_train[day_key]
 
     a = datetime.now()
     b = timedelta(days=1)
-    c = datetime(2018, 10, 10, 0, 0, 0)
-    str(a)
-    tomorrow_data = a + b
-    now_data = datetime.strftime(datetime.now(), "%Y-%m-%d %H:%M:%S")
-    current_data = datetime.strftime(tomorrow_data, "%Y-%m-%d %H:%M:%S")
-    time_now = datetime.strftime(datetime.now(), "%H:%M:%S")
-    time_zero = datetime.strftime(c, "%H:%M:%S")
+
+
+    print(a.day)
+    print(user.day_train)
+    if int(a.day) > int(user.day_train):
+        user.day_train += 1
+        db.session.commit()
+        day_key += 1
+        user.train = day_key
+        db.session.commit()
+
+        if day_key in day_of_train:
+            day = day_of_train[day_key]
+
+        if day_key == 1:
+            exer_1 = 'Разминка'
+            exer_2 = 'Приседания '
+            exer_3 = 'Скручивания '
+            exer_4 = 'Лодочка '
+            url_1 = 'c2u6aa64j80'
+            url_2 = 'OhhXifdyhxs'
+            url_3 = 'Sz0naPQqnPY'
+            url_4 = 'XpnZE9JzRto'
+
+
+        if day_key == 2:
+            exer_1 = 'Выходной'
+        if day_key == 3:
+            exer_1 = 'Разминка'
+            exer_2 = 'Выпады поочерёдно на каждую ногу'
+            exer_3 = 'Ситап'
+            exer_4 = 'Подъём корпуса лёжа на животе '
+            url_1 = 'c2u6aa64j80'
+            url_2 = 'pclYaTqMZI4'
+            url_3 = 'W-ZBcZnuQqM'
+            url_4 = '5eLxwsNCn1Y'
+        if day_key == 4:
+            exer_1 = 'Выходной'
+        if day_key == 5:
+            exer_1 = 'Приседания'
+            exer_2 = 'Ягодичный мостик'
+            exer_3 = 'Отжимания с колен'
+            exer_4 = 'Скалолаз '
+            exer_5 = 'Планка'
+            url_1 = 'c2u6aa64j80'
+            url_2 = 'UsJMO-wLf0Y'
+            url_3 = 'LecVKn8Q-MM'
+            url_4 = 'Sz0naPQqnPY'
+            url_5 = 'XpnZE9JzRto'
+        if day_key == 5:
+            exer_1 = 'Выходной'
 
     return render_template('pages/lk/train.html',
                            day=day,
@@ -440,8 +465,8 @@ def train_render():
 
 @app.route('/home', methods=['POST'])
 def start_home():
-    USER_ID = User.get_id(current_user)
-    user = User.query.get(USER_ID)
+
+    user = User.query.get(current_user.id)
     username = user.username
     print(username)
     return render_template('pages/lk/home.html', username=username)
@@ -450,7 +475,7 @@ def start_home():
 @app.route('/progress')
 def progress_render():
     # query = db_session.query(user_info)
-    USER_ID = User.get_id(current_user)
+    USER_ID = current_user.id
     results = user_info.query.filter(user_info.user_id_helper == USER_ID)
     # results = query.all()
     print('Hueg', results)
@@ -502,8 +527,7 @@ def video_4_render():
 
 
 def calculator():
-    USER_ID = User.get_id(current_user)
-    user = User.query.get(USER_ID)
+    user = User.query.get(current_user.id)
     print('metatag usera', user.username)
     mass = int(user.massuser)
     gender = int(user.gender)
@@ -520,7 +544,7 @@ def calculator():
         Dn = (5.94 * m + 7 * (m * 24.44 * r * (1 + l))) * 0.13
         return Dn
     else:
-        return
+        return 2300
 
 
 def belki_calc():
@@ -539,8 +563,8 @@ def ugl_cal():
 
 
 def r_calc():
-    USER_ID = User.get_id(current_user)
-    user = User.query.get(USER_ID)
+
+    user = User.query.get(current_user.id)
     age = int(user.data)
     r = 1
     if age <= 25:
@@ -557,8 +581,8 @@ def r_calc():
 
 
 def l_calc():
-    USER_ID = User.get_id(current_user)
-    user = User.query.get(USER_ID)
+
+    user = User.query.get(current_user.id)
     activity = 1
     activity = int(user.activity)
     l = 0.06
@@ -576,14 +600,18 @@ def l_calc():
 def payment_98():
     return render_template('payment/payment_98.html')
 
+@app.route('/payment/redirect/2990',methods=['GET', 'POST'])
+def payment_2990():
+    return render_template('payment/payment_2990.html')
+
 
 
 @app.route('/test/start',methods=['GET', 'POST'])
 def start_test():
     return render_template('quiz/index.html')
 
-@app.route('/test/sex', methods=['GET', 'POST'])
-def sex_test():
+@app.route('/test/gender', methods=['GET', 'POST'])
+def gender_test():
     return render_template('quiz/sex.html')
 
 @app.route('/test/age', methods=['GET', 'POST'])
@@ -610,14 +638,18 @@ def submit_test():
 def final_test():
     return render_template('quiz/final.html')
 
+@app.route('/test/tw')
+def tw_render():
+    return render_template('quiz/tw.html')
+
+@app.route('/test/cp')
+def cp_render():
+    return render_template('quiz/cp.html')
+
+
 
 
 @app.route('/next_day', methods=['POST'])
 def success_train_changer():
-    USER_ID = User.get_id(current_user)
-    user = User.query.get(USER_ID)
-    user.train += 1
-    if user.train > 6:
-        user.train = 1
-    db.session.commit()
-    return home()
+    return render_template('pages/lk/welldone.html')
+

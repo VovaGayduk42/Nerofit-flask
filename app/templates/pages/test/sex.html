@@ -17,12 +17,15 @@
 				<div class="progress__bar-inner"></div>
 			</div>
 		</div>
-                <form action="/poll">
+         <form action="/poll" method="post">
                 <div class="review-form__sex">
+
                 {% for e in data.fields%}
 
 <label class="pic-label">
+
 					<input type="radio" name="sex" value="{{ e }}" checked />
+
 					<span class="pic-label__inner">
                         {% if e == "Женщина" %}
 						<i class="icon-female pic-label__icon"></i>
@@ -36,11 +39,12 @@
 
 
                 {% endfor %}
+
                 </div>
                    <div class="review-form__footer">
 				<button class="review-form__btn">Далее</button>
 			</div>
-		</form>
+  </form>
 	</div>
 <script src="//code.jquery.com/jquery-latest.min.js"></script>
 <script src="js/script.js"></script>

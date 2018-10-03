@@ -1,6 +1,6 @@
 import os
 CSRF_ENABLED = True
-SECRET_KEY = 'jxtymckj;ysqctrhtnysqrk.x1234567890!@#$%^&*()'
+SECRET_KEY = 'SECRET_KEY'
 OPENID_PROVIDERS = [
     { 'name': 'Google', 'url': 'https://www.google.com/accounts/o8/id' },
     { 'name': 'Yahoo', 'url': 'https://me.yahoo.com' },
